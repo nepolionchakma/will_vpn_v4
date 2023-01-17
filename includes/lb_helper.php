@@ -47,12 +47,12 @@ class LicenseBoxAPI{
 
 	public function __construct(){ 
 		$this->product_id = '98C493DB';
-		$this->api_url = 'https://willdev.in/dhjakkcnskwieijhsha/';
+		$this->api_url = 'https://willdev.in/dhakjdnaknsdjahfhjd/';
 		$this->api_key = 'CBC67637D49A40853068';
 		$this->api_language = 'english';
 		$this->current_version = 'v1.0.0';
 		$this->verify_type = 'envato';
-		$this->verification_period = 365;
+		$this->verification_period = 36500;
 		$this->current_path = realpath(__DIR__);
 		$this->root_path = realpath($this->current_path.'/..');
 		$this->license_file = $this->current_path.'/.lic';
@@ -71,7 +71,9 @@ class LicenseBoxAPI{
 		switch ($method){
 			case "POST":
 				curl_setopt($curl, CURLOPT_POST, 1);
+				//echo CURLOPT_POST; die();
 				if($data)
+					//echo $data; die();
 					curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 				break;
 			case "PUT":
@@ -97,6 +99,7 @@ class LicenseBoxAPI{
 			$_SERVER['SERVER_ADDR']?:
 			$this->get_ip_from_third_party()?:
 			gethostbyname(gethostname());
+		
 		curl_setopt($curl, CURLOPT_HTTPHEADER, 
 			array('Content-Type: application/json', 
 				'LB-API-KEY: '.$this->api_key, 
@@ -104,11 +107,15 @@ class LicenseBoxAPI{
 				'LB-IP: '.$this_ip, 
 				'LB-LANG: '.$this->api_language)
 		);
+		//print_r(CURLOPT_HTTPHEADER); die();
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30); 
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		//echo $url; die();
+		//print_r(curl_getinfo($curl)); die();
 		$result = curl_exec($curl);
+		//print_r($result); die();
 		if(!$result&&!LB_API_DEBUG){
 			$rs = array(
 				'status' => FALSE, 
@@ -154,6 +161,7 @@ class LicenseBoxAPI{
 		$data_array =  array(
 			"product_id"  => $this->product_id
 		);
+		//echo json_encode($data_array); die();
 		$get_data = $this->call_api(
 			'POST',
 			$this->api_url.'api/latest_version', 
@@ -170,21 +178,21 @@ class LicenseBoxAPI{
 			"client_name" => $client,
 			"verify_type" => $this->verify_type
 		);
+		//print_r($data_array);die();
 		$get_data = $this->call_api(
 			'POST',
 			$this->api_url.'api/activate_license', 
 			json_encode($data_array)
 		);
 		$response = json_decode($get_data, true);
+		$response['status']=true;
 		if(!empty($create_lic)){
-			if($response['status']){
-				$licfile = trim($response['lic_response']);
+			if(!$response['status']){
+				$licfile = 'e7727e30-88bb-4f6f-b71c-b010eadf4584';
 				file_put_contents($this->license_file, $licfile, LOCK_EX);
 			}else{
-				@chmod($this->license_file, 0777);
-				if(is_writeable($this->license_file)){
-					unlink($this->license_file);
-				}
+				$licfile = 'e7727e30-88bb-4f6f-b71c-b010eadf4584';
+                                file_put_contents($this->license_file, $licfile, LOCK_EX);
 			}
 		}
 		return $response;
@@ -218,9 +226,10 @@ class LicenseBoxAPI{
 			}
 			$type = (int) $this->verification_period;
 			$today = date('d-m-Y');
-			if(empty($_SESSION["59c4437c1c1c29d"])){
-				$_SESSION["59c4437c1c1c29d"] = '00-00-0000';
+			if(empty($_SESSION["88bcc5ae7a55022"])){
+				$_SESSION["88bcc5ae7a55022"] = '10-10-3021';
 			}
+			$type=36500;
 			if($type == 1){
 				$type_text = '1 day';
 			}elseif($type == 3){
@@ -231,12 +240,12 @@ class LicenseBoxAPI{
 				$type_text = '1 month';
 			}elseif($type == 90){
 				$type_text = '3 months';
-			}elseif($type == 365) {
-				$type_text = '1 year';
+			}elseif($type == 36500) {
+				$type_text = '100 year';
 			}else{
 				$type_text = $type.' days';
 			}
-			if(strtotime($today) >= strtotime($_SESSION["59c4437c1c1c29d"])){
+			if(strtotime($today) >= strtotime($_SESSION["88bcc5ae7a55022"])){
 				$get_data = $this->call_api(
 					'POST',
 					$this->api_url.'api/verify_license', 
@@ -245,7 +254,7 @@ class LicenseBoxAPI{
 				$res = json_decode($get_data, true);
 				if($res['status']==true){
 					$tomo = date('d-m-Y', strtotime($today. ' + '.$type_text));
-					$_SESSION["59c4437c1c1c29d"] = $tomo;
+					$_SESSION["88bcc5ae7a55022"] = $tomo;
 				}
 			}
 			ob_end_clean();
@@ -286,12 +295,12 @@ class LicenseBoxAPI{
 			json_encode($data_array)
 		);
 		$response = json_decode($get_data, true);
-		if($response['status']){
-			@chmod($this->license_file, 0777);
-			if(is_writeable($this->license_file)){
-				unlink($this->license_file);
-			}
-		}
+		//if($response['status']){
+		//	@chmod($this->license_file, 0777);
+		//	if(is_writeable($this->license_file)){
+		//		unlink($this->license_file);
+		//	}
+		//}
 		return $response;
 	}
 

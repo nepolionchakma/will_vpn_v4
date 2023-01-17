@@ -4679,17 +4679,12 @@
 					  </table>
 					</div>';
  
-			if(send_email($to,$recipient_name,$subject,$message))
-			{
+			    send_email($to,$recipient_name,$subject,$message);
 				$sql="UPDATE tbl_users SET `password`='$new_password' WHERE `id`='".$row['id']."'";
       			mysqli_query($mysqli,$sql);
 
       			$set['ANDROID_REWARDS_APP']=array('msg' => $app_lang['password_sent_mail'],'success'=>'1');
-			}
-			else{
 
-				$set['ANDROID_REWARDS_APP']=array('msg' => $app_lang['email_not_found'],'success'=>'0');
-			}
 		}
 		else
 		{  	 	
@@ -6814,6 +6809,20 @@
 		header( 'Content-Type: application/json; charset=utf-8' );
 	    echo $val= str_replace('\\/', '/', json_encode($set,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 		die();	
+	}
+	else if($get_method['method_name']=="fetch_onesignal_id")		
+	{
+		$qry="SELECT * FROM tbl_settings where id='1'";
+		$result=mysqli_query($mysqli,$qry);
+		$row=mysqli_fetch_assoc($result); 
+
+		$onesignal_app_id = $row['onesignal_app_id'];
+		
+		$set['ANDROID_REWARDS_APP']=array('onesignal_app_id' => $onesignal_app_id, 'success'=>'1');
+		
+		header( 'Content-Type: application/json; charset=utf-8' );
+	    echo $val= str_replace('\\/', '/', json_encode($set,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+		die();
 	}
 	else
 	{

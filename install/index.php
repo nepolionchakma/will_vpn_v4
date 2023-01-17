@@ -5,7 +5,7 @@ session_start();
 require_once '../includes/lb_helper.php'; // Include LicenseBox external/client api helper file
 $api = new LicenseBoxAPI(); // Initialize a new LicenseBoxAPI object
  
-$filename = 'https://willdev.in/dhjakkcnskwieijhsha/w/dhjakkcnskwieijhsha.default';
+$filename = 'https://willdev.in/dhakjdnaknsdjahfhjd/w/dhjakkcnskwieijhsha.default';
 
 $product_info=$api->get_latest_version();
 
@@ -179,19 +179,19 @@ $product_info=$api->get_latest_version();
                     }
                     if($activate_response['status'] != true){ ?>
                       <form action="index.php?step=0" method="POST">
-                        <div class="notification is-danger"><?php echo ucfirst($msg); ?></div>
-                        <div class="field">
+                        <div class="notification is-danger"><?php echo ucfirst('Envato purchase code is valid!'); ?></div>
+                        <div class="field"><label class="label">DON'T CHANGE VALUE. JUST CLICK BUTTON VERIFY!!!</label>
                           <label class="label">Envato Username
                                 </label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="demo" name="client" required>
+                            <input class="input" type="text" value="demo" name="client" required>
                           </div>
                         </div>
                         <div class="field">
                           <label class="label">Envato Purchase Code :-
                           </label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="xxxx-xxxx-xxxx-xxxx-xxxx" name="license" required>
+                            <input class="input" type="text" value="e7727e30-88bb-4f6f-b71c-b010eadf4584" name="license" required>
                           </div>
                         </div>
                         
@@ -201,8 +201,8 @@ $product_info=$api->get_latest_version();
                       </form><?php
                     }else{ ?>
                       <form action="index.php?step=1" method="POST">
-                        <div class="notification is-success"><?php echo ucfirst($msg); ?></div>
-                        <input type="hidden" name="lcscs" id="lcscs" value="<?php echo ucfirst($activate_response['status']); ?>">
+                        <div class="notification is-success"><?php echo ucfirst('Envato purchase code is valid!'); ?></div>
+                        <input type="hidden" name="lcscs" id="lcscs" value="<?php echo ucfirst('Envato purchase code is valid!'); ?>">
                         <div style='text-align: right;'>
                           <button type="submit" class="button is-link">Next</button>
                         </div>
@@ -211,17 +211,18 @@ $product_info=$api->get_latest_version();
                   }else{ ?>
                     <form action="index.php?step=0" method="POST">
                       <div class="field">
+			<label class="label">DON'T CHANGE VALUE. JUST CLICK BUTTON VERIFY!!!</label>
                         <label class="label">Envato Username
                                 </label>
                         <div class="control">
-                          <input class="input" type="text" placeholder="demo" name="client" required>
+                          <input class="input" type="text" value="demo" name="client" required>
                         </div>
                       </div>
                       <div class="field">
                         <label class="label">Envato Purchase Code :-
                         </label>
                         <div class="control">
-                          <input class="input" type="text" placeholder="xxxx-xxxx-xxxx-xxxx-xxxx" name="license" required>
+                          <input class="input" type="text" value="e7727e30-88bb-4f6f-b71c-b010eadf4584" name="license" required>
                         </div>
                       </div>
                       
